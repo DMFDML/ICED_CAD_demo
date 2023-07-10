@@ -9,6 +9,7 @@ TagManager:
   - box
   - voxel
   - Tool
+  - Trail
   layers:
   - Default
   - TransparentFX
