@@ -59,9 +59,9 @@ public class Destruction : MonoBehaviour
                     for (float z = 0; z < cubeDepth; z += cubeScale)
                     {
                         Vector3 vec = transform.position;
-                        Debug.Log(vec);
+                        // Debug.Log(vec);
                         vec = vec - new Vector3(cubeWidth/2 - cubeScale/2, cubeHeight/2  - cubeScale/2, cubeDepth/2  - cubeScale/2);
-                        Debug.Log(vec);
+                        // Debug.Log(vec);
 
                         GameObject cubes = (GameObject)Instantiate(mesh, vec + new Vector3(x, y, z), Quaternion.identity);
                         cubes.gameObject.GetComponent<MeshRenderer>().material = gameObject.GetComponent<MeshRenderer>().material;
