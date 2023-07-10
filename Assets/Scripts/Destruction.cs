@@ -24,7 +24,7 @@ public class Destruction : MonoBehaviour
         cubeWidth = transform.localScale.x;
         cubeHeight = transform.localScale.y;
         cubeDepth = transform.localScale.z;
-        Debug.Log("");
+        
         cubeScale = Mathf.Max(cubeDepth, cubeHeight, cubeWidth) / cubeScalar;
 
         // gameObject.GetComponent<MeshRenderer>().enabled = false;
