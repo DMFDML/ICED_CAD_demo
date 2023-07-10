@@ -9,6 +9,7 @@ TagManager:
   - box
   - voxel
   - Tool
+  - Environment
   layers:
   - Default
   - TransparentFX
