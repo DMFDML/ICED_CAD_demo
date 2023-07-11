@@ -32,6 +32,8 @@ public class Explosion : MonoBehaviour
         {
             if (hitCol.GetComponent<Rigidbody>() == null)
             {
+                hitCol.gameObject.transform.SetParent(null);
+                
                 hitCol.GetComponent<MeshRenderer>().enabled = true;
 
                 hitCol.gameObject.AddComponent<Rigidbody>();
@@ -41,6 +43,7 @@ public class Explosion : MonoBehaviour
                 hitCol.GetComponent<Rigidbody>().velocity = Camera.main.transform.forward * 5;
                 hitCol.GetComponent<Rigidbody>().AddExplosionForce(explosionPower, explosionPoint, blastRadius, 1, ForceMode.Impulse);
 
+                Destroy(hitCol.gameObject, 5);
 
                 // Rigidbody hitColBody = hitCol.GetComponent<Rigidbody>();
                 // hitColBody.mass = 500;
