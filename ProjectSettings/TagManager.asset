@@ -10,6 +10,7 @@ TagManager:
   - voxel
   - Tool
   - Trail
+  - Environment
   layers:
   - Default
   - TransparentFX

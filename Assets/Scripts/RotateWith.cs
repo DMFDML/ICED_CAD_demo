@@ -9,20 +9,17 @@ public class RotateWith : MonoBehaviour
 
     private void OnCollisionEnter(Collision col) 
     {
-        speed = gameObject.GetComponent<WheelRotate>().speed;
-        col.gameObject.transform.Rotate(0, speed, 0);
+        if (col.gameObject.tag == "Environment")
+        {
+            return;
+        } else if (col.gameObject.tag == "box")
+        {
+            speed = col.gameObject.GetComponent<WheelRotate>().speed;
+            transform.Rotate(0, speed, 0);
+        } else
+        {
+            col.gameObject.transform.SetParent(gameObject.transform);
+        }
     }
 
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }

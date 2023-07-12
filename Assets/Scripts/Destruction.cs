@@ -6,6 +6,7 @@ public class Destruction : MonoBehaviour
 {
 
     public GameObject mesh;
+    GameObject voxelParent;
 
     float cubeWidth;
     float cubeHeight;
@@ -13,10 +14,6 @@ public class Destruction : MonoBehaviour
 
     public float cubeScalar = 10f;
     float cubeScale;
-
-    float cubesX;
-    float cubesY;
-    float cubesZ;
 
     // Start is called before the first frame update
     void Start()
@@ -46,8 +43,13 @@ public class Destruction : MonoBehaviour
 
     void CreateCube()
     {
-        // this.gameObject.GetComponent<BoxCollider>().enabled = false;
         this.gameObject.SetActive(false);
+
+        voxelParent = new GameObject("Voxel Parent", typeof(WheelRotate));
+        voxelParent.GetComponent<Transform>().position = gameObject.transform.position;
+        voxelParent.GetComponent<Transform>().rotation = gameObject.transform.rotation;
+
+        voxelParent.GetComponent<WheelRotate>().speed = this.gameObject.GetComponent<WheelRotate>().speed;
 
         if (gameObject.CompareTag("box"))
         {
@@ -64,6 +66,7 @@ public class Destruction : MonoBehaviour
                         // Debug.Log(vec);
 
                         GameObject cubes = (GameObject)Instantiate(mesh, vec + new Vector3(x, y, z), Quaternion.identity);
+                        cubes.transform.SetParent(voxelParent.GetComponent<Transform>());
                         cubes.gameObject.GetComponent<MeshRenderer>().material = gameObject.GetComponent<MeshRenderer>().material;
                     }
                 }
