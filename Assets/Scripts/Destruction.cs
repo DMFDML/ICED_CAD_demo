@@ -43,19 +43,27 @@ public class Destruction : MonoBehaviour
 
     void CreateCube()
     {
-        this.gameObject.SetActive(false);
+        this.gameObject.SetActive(false);     
 
-        voxelParent = new GameObject("Voxel Parent", typeof(WheelRotate));
-        voxelParent.GetComponent<Transform>().position = gameObject.transform.position;
-        voxelParent.GetComponent<Transform>().rotation = gameObject.transform.rotation;
-
-        voxelParent.GetComponent<WheelRotate>().speed = this.gameObject.GetComponent<WheelRotate>().speed;
+        if (GetComponent<WheelRotate>() != null)
+        {
+            voxelParent = new GameObject("Voxel Parent", typeof(WheelRotate));
+            voxelParent.GetComponent<Transform>().position = gameObject.transform.position;
+            voxelParent.GetComponent<Transform>().rotation = gameObject.transform.rotation;
+            voxelParent.GetComponent<WheelRotate>().speed = this.gameObject.GetComponent<WheelRotate>().speed;
+        }
+        else
+        {
+            voxelParent = new GameObject("Voxel Parent");
+            voxelParent.GetComponent<Transform>().position = this.gameObject.transform.position;
+            voxelParent.GetComponent<Transform>().rotation = this.gameObject.transform.rotation;
+        }
 
         if (gameObject.CompareTag("box"))
         {
             for (float x = 0; x < cubeWidth; x += cubeScale)
             
-            {Debug.Log(x);
+            {//Debug.Log(x);
                 for (float y = 0; y < cubeHeight; y+= cubeScale)
                 {
                     for (float z = 0; z < cubeDepth; z += cubeScale)

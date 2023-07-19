@@ -16,9 +16,12 @@ public class CreateTrail : MonoBehaviour
     //public GameObject combined;
     private bool isLineStarted;
 
+    public string tag = "Trail"; // The desired tag for the instantiated GameObject
+
     public void StartTrail()
     {
         Lineobject = Instantiate(LinePrefab);
+        Lineobject.tag = tag;
         //Debug.Log(combined);
         //Lineobject.transform.SetParent(combined.transform, true);
         // set the color of the line
@@ -50,7 +53,7 @@ public class CreateTrail : MonoBehaviour
 
     public void Update()
     {
-        //Debug.Log("Drawing Line");
+        Debug.Log("Drawing Line");
         if (isLineStarted)
         {
             //Debug.Log("checking");
