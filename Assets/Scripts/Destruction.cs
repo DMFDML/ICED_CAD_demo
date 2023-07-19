@@ -14,6 +14,7 @@ public class Destruction : MonoBehaviour
 
     public float cubeScalar = 10f;
     float cubeScale;
+    public string tag = "Removable_voxels";
 
     // Start is called before the first frame update
     void Start()
@@ -43,11 +44,12 @@ public class Destruction : MonoBehaviour
 
     void CreateCube()
     {
-        this.gameObject.SetActive(false);     
+        //this.gameObject.SetActive(false);     
 
         if (GetComponent<WheelRotate>() != null)
         {
             voxelParent = new GameObject("Voxel Parent", typeof(WheelRotate));
+            voxelParent.tag = tag;
             voxelParent.GetComponent<Transform>().position = gameObject.transform.position;
             voxelParent.GetComponent<Transform>().rotation = gameObject.transform.rotation;
             voxelParent.GetComponent<WheelRotate>().speed = this.gameObject.GetComponent<WheelRotate>().speed;
@@ -55,9 +57,12 @@ public class Destruction : MonoBehaviour
         else
         {
             voxelParent = new GameObject("Voxel Parent");
-            voxelParent.GetComponent<Transform>().position = this.gameObject.transform.position;
-            voxelParent.GetComponent<Transform>().rotation = this.gameObject.transform.rotation;
+            voxelParent.tag = tag;
+            voxelParent.GetComponent<Transform>().position = transform.position;
+            voxelParent.GetComponent<Transform>().rotation = transform.rotation;
         }
+
+        this.gameObject.SetActive(false);
 
         if (gameObject.CompareTag("box"))
         {

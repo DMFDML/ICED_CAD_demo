@@ -53,7 +53,7 @@ public class CreateTrail : MonoBehaviour
 
     public void Update()
     {
-        Debug.Log("Drawing Line");
+        //Debug.Log("Drawing Line");
         if (isLineStarted)
         {
             //Debug.Log("checking");
