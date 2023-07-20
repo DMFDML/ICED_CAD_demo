@@ -12,6 +12,10 @@ public class CreatePrimitive : MonoBehaviour
 
     private float DirectionOfScale = 0f;
     private Vector3 scale;
+    private Vector3 scalex;
+    private Vector3 scaley;
+    private Vector3 scalez;
+    private Vector3 scaleall;
 
     public void Start()
     {
@@ -38,7 +42,11 @@ public class CreatePrimitive : MonoBehaviour
 
         GameObject Newcube = Instantiate(Prefab);// CreatePrimitive(PrimitiveType.Cube);
         Newcube.transform.position = new Vector3(-1.53f, 0.95f, 1.40f);  //transform.position-new Vector3(0.2f,0,0);
-        Newcube.transform.localScale = scale; //new Vector3(0.1f,0.1f,0.1f);
+        Newcube.transform.localScale = scale+ scalex + scaley + scalez + scaleall; //new Vector3(0.1f,0.1f,0.1f);
+        scalex= new Vector3(0, 0, 0);
+        scaley = new Vector3(0, 0, 0);
+        scalez = new Vector3(0, 0, 0);
+        scaleall = new Vector3(0, 0, 0);
         //Newcube.AddComponent<UnityEngine.XR.Interaction.Toolkit.XRGrabInteractable>();
     }
 
@@ -53,21 +61,27 @@ public class CreatePrimitive : MonoBehaviour
     {
         if (DirectionOfScale == 0)
         {
-            scale = new Vector3(0.1f + value, 0.1f, 0.1f);
+            //scale = new Vector3(0.1f + value, 0.1f, 0.1f);
+            scalex = new Vector3(value, 0, 0);
             //Debug.Log(GameObject.transform.localScale.x);
         }
         else if (DirectionOfScale == 1)
         {
-            scale = new Vector3(0.1f, 0.1f + value, 0.1f);
+            //scale = new Vector3(0.1f, 0.1f + value, 0.1f);
+            scaley = new Vector3(0, value, 0);
         }
         else if (DirectionOfScale == 2)
         {
-            scale = new Vector3(0.1f, 0.1f, 0.1f + value);
+            //scale = new Vector3(0.1f, 0.1f, 0.1f + value);
+            scalez = new Vector3(0, 0, value);
         }
         else
         {
-            scale = new Vector3(0.1f + value, 0.1f + value, 0.1f + value);
+            //scale = new Vector3(0.1f + value, 0.1f + value, 0.1f + value);
+            scaleall = new Vector3(value, value, value);
         }
+        Debug.Log(value);
+        Debug.Log(scalex+scaley+scalez+scaleall);
     }
 
     public void SetDirection(float value)
