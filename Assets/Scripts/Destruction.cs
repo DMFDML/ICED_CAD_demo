@@ -45,11 +45,9 @@ public class Destruction : MonoBehaviour
 
     void CreateCube()
     {
-        //this.gameObject.SetActive(false);
 
+        // Get the rotation of the block being changed
         rotation = transform.localRotation.eulerAngles;
-
-        // Debug.Log(gameObject.transform.localRotation.eulerAngles);
 
         if (GetComponent<WheelRotate>() != null)
         {
@@ -61,15 +59,14 @@ public class Destruction : MonoBehaviour
         else
         {
             voxelParent = new GameObject("Voxel Parent", typeof(BoxCollider));
-            Debug.Log(transform.rotation);
             voxelParent.tag = tag;
             voxelParent.GetComponent<Transform>().position = transform.position;
         }
 
-        // voxelParent.transform.SetParent(transform.parent);
-
+        //turn the block off
         this.gameObject.SetActive(false);
 
+        // if the block is one that can be turned into voxels, do it
         if (gameObject.CompareTag("box"))
         {
             for (float x = 0; x < cubeWidth; x += cubeScale)
@@ -90,6 +87,7 @@ public class Destruction : MonoBehaviour
             }
         }
 
+        // Set the voxels into the original rotation of the block
         voxelParent.GetComponent<Transform>().Rotate(rotation, Space.Self);
 
     }
