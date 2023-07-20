@@ -37,7 +37,7 @@ public class CreatePrimitive : MonoBehaviour
         }
 
         GameObject Newcube = Instantiate(Prefab);// CreatePrimitive(PrimitiveType.Cube);
-        Newcube.transform.position = new Vector3(-1.53f, 0.85f, 1.40f);  //transform.position-new Vector3(0.2f,0,0);
+        Newcube.transform.position = new Vector3(-1.53f, 0.95f, 1.40f);  //transform.position-new Vector3(0.2f,0,0);
         Newcube.transform.localScale = scale; //new Vector3(0.1f,0.1f,0.1f);
         //Newcube.AddComponent<UnityEngine.XR.Interaction.Toolkit.XRGrabInteractable>();
     }
