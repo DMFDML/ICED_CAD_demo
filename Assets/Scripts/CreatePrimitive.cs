@@ -80,8 +80,6 @@ public class CreatePrimitive : MonoBehaviour
             //scale = new Vector3(0.1f + value, 0.1f + value, 0.1f + value);
             scaleall = new Vector3(value, value, value);
         }
-        Debug.Log(value);
-        Debug.Log(scalex+scaley+scalez+scaleall);
     }
 
     public void SetDirection(float value)
