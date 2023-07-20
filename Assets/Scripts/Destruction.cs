@@ -7,6 +7,7 @@ public class Destruction : MonoBehaviour
 
     public GameObject mesh;
     GameObject voxelParent;
+    Vector3 rotation;
 
     float cubeWidth;
     float cubeHeight;
@@ -44,26 +45,28 @@ public class Destruction : MonoBehaviour
 
     void CreateCube()
     {
-        //this.gameObject.SetActive(false);     
+
+        // Get the rotation of the block being changed
+        rotation = transform.localRotation.eulerAngles;
 
         if (GetComponent<WheelRotate>() != null)
         {
             voxelParent = new GameObject("Voxel Parent", typeof(WheelRotate));
             voxelParent.tag = tag;
-            voxelParent.GetComponent<Transform>().position = gameObject.transform.position;
-            voxelParent.GetComponent<Transform>().rotation = gameObject.transform.rotation;
+            voxelParent.GetComponent<Transform>().position = transform.position;
             voxelParent.GetComponent<WheelRotate>().speed = this.gameObject.GetComponent<WheelRotate>().speed;
         }
         else
         {
-            voxelParent = new GameObject("Voxel Parent");
+            voxelParent = new GameObject("Voxel Parent", typeof(BoxCollider));
             voxelParent.tag = tag;
             voxelParent.GetComponent<Transform>().position = transform.position;
-            voxelParent.GetComponent<Transform>().rotation = transform.rotation;
         }
 
+        //turn the block off
         this.gameObject.SetActive(false);
 
+        // if the block is one that can be turned into voxels, do it
         if (gameObject.CompareTag("box"))
         {
             for (float x = 0; x < cubeWidth; x += cubeScale)
@@ -74,16 +77,18 @@ public class Destruction : MonoBehaviour
                     for (float z = 0; z < cubeDepth; z += cubeScale)
                     {
                         Vector3 vec = transform.position;
-                        // Debug.Log(vec);
                         vec = vec - new Vector3(cubeWidth/2 - cubeScale/2, cubeHeight/2  - cubeScale/2, cubeDepth/2  - cubeScale/2);
-                        // Debug.Log(vec);
 
-                        GameObject cubes = (GameObject)Instantiate(mesh, vec + new Vector3(x, y, z), Quaternion.identity);
+                        GameObject cubes = (GameObject)Instantiate(mesh, vec + new Vector3(x, y, z), voxelParent.GetComponent<Transform>().rotation);
                         cubes.transform.SetParent(voxelParent.GetComponent<Transform>());
                         cubes.gameObject.GetComponent<MeshRenderer>().material = gameObject.GetComponent<MeshRenderer>().material;
                     }
                 }
             }
         }
+
+        // Set the voxels into the original rotation of the block
+        voxelParent.GetComponent<Transform>().Rotate(rotation, Space.Self);
+
     }
 }
