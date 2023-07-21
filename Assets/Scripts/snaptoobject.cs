@@ -22,6 +22,7 @@ public class snaptoobject : MonoBehaviour
     {
         // Check if the other GameObject has a Rigidbody (to ensure it's a movable object).
         Rigidbody otherRigidbody = other.GetComponent<Rigidbody>();
+        Debug.Log("Hello");
         if (otherRigidbody != null)
         {
             // Make the parent GameObject the new parent of the entered object.
