@@ -29,6 +29,21 @@ public class CreatePrimitive : MonoBehaviour
     }
     private void OnTriggerEnter(Collider namedcol)
     {
+        
+        // Get the Renderer component attached to this GameObject
+        Renderer rend = GetComponent<Renderer>();
+
+        // Check if a Renderer component exists
+        if (rend != null)
+        {
+            // Create a new material with the desired color (red in this case)
+            Material redMaterial = new Material(Shader.Find("Standard"));
+            redMaterial.color = Color.red;
+
+            // Assign the new material to the Renderer
+            rend.material = redMaterial;
+        }
+
         if (typep== 0)
         {
             //Debug.Log("Value is 0 and prefab is Non-rigid");
@@ -48,6 +63,24 @@ public class CreatePrimitive : MonoBehaviour
         scalez = new Vector3(0, 0, 0);
         scaleall = new Vector3(0, 0, 0);
         //Newcube.AddComponent<UnityEngine.XR.Interaction.Toolkit.XRGrabInteractable>();
+    }
+
+    private void OnTriggerExit(Collider namedcol)
+    {
+
+        // Get the Renderer component attached to this GameObject
+        Renderer rend = GetComponent<Renderer>();
+
+        // Check if a Renderer component exists
+        if (rend != null)
+        {
+            // Create a new material with the desired color (red in this case)
+            Material redMaterial = new Material(Shader.Find("Standard"));
+            redMaterial.color = Color.white;
+
+            // Assign the new material to the Renderer
+            rend.material = redMaterial;
+        }
     }
 
     // Start is called before the first frame update
