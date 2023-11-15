@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class CreatePrimitive : MonoBehaviour
 {
@@ -16,10 +17,18 @@ public class CreatePrimitive : MonoBehaviour
     private Vector3 scaley;
     private Vector3 scalez;
     private Vector3 scaleall;
+    private Vector3 valueToDisplay;
+
+    public changetext valueUpdater;
 
     public void Start()
     {
         scale = new Vector3(0.1f, 0.1f, 0.1f);
+        // Assume you have a value to display, for example, "Hello, TextMeshPro!"
+        //string valueToDisplay = "Hello, TextMeshPro!";
+
+        // Call the UpdateValue method to update the TextMeshPro text
+        //valueUpdater.UpdateValue(valueToDisplay);
     }
 
     public void SetPrimitiveType(float value)
@@ -58,7 +67,12 @@ public class CreatePrimitive : MonoBehaviour
         GameObject Newcube = Instantiate(Prefab);// CreatePrimitive(PrimitiveType.Cube);
         Newcube.transform.position = new Vector3(-1.53f, 0.95f, 1.40f);  //transform.position-new Vector3(0.2f,0,0);
         Newcube.transform.localScale = scale+ scalex + scaley + scalez + scaleall; //new Vector3(0.1f,0.1f,0.1f);
-        scalex= new Vector3(0, 0, 0);
+        
+        // Call the UpdateValue method to update the TextMeshPro text
+        //valueToDisplay = Newcube.transform.localScale;
+        //valueUpdater.UpdateValue(valueToDisplay.ToString());
+
+        scalex = new Vector3(0, 0, 0);
         scaley = new Vector3(0, 0, 0);
         scalez = new Vector3(0, 0, 0);
         scaleall = new Vector3(0, 0, 0);
@@ -113,12 +127,16 @@ public class CreatePrimitive : MonoBehaviour
             //scale = new Vector3(0.1f + value, 0.1f + value, 0.1f + value);
             scaleall = new Vector3(value, value, value);
         }
+
+        // Call the UpdateValue method to update the TextMeshPro text
+        valueToDisplay = scale + scalex + scaley + scalez + scaleall;
+        valueUpdater.UpdateValue("Dimension: "+(valueToDisplay*1000).ToString());
     }
 
     public void SetDirection(float value)
     {
         DirectionOfScale = value;
-        Debug.Log("Direction of Scale"+ DirectionOfScale);
+        //Debug.Log("Direction of Scale"+ DirectionOfScale);
     }
 
 }

@@ -18290,7 +18290,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mesh: {fileID: 1743606584987335461, guid: db19c89ad99d55b49871f2d16ce4ad2a, type: 3}
-  cubeScalar: 20
+  cubeScalar: 15
   tag: Removable_voxels
 --- !u!65 &2110031090
 BoxCollider:
