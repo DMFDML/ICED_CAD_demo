@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.XR.Interaction.Toolkit;
 
 public class CreatePrimitive : MonoBehaviour
 {
@@ -19,7 +20,9 @@ public class CreatePrimitive : MonoBehaviour
     private Vector3 scaleall;
     private Vector3 valueToDisplay;
 
-    public changetext valueUpdater;
+    //public changetext valueUpdater;
+
+    //public XRController handController;
 
     public void Start()
     {
@@ -67,7 +70,16 @@ public class CreatePrimitive : MonoBehaviour
         GameObject Newcube = Instantiate(Prefab);// CreatePrimitive(PrimitiveType.Cube);
         Newcube.transform.position = new Vector3(-1.53f, 0.95f, 1.40f);  //transform.position-new Vector3(0.2f,0,0);
         Newcube.transform.localScale = scale+ scalex + scaley + scalez + scaleall; //new Vector3(0.1f,0.1f,0.1f);
-        
+
+        // Attach the grabbable object to the hand controller
+        // Create an instance of XRDirectInteractor and attach it to the hand controller
+        //XRDirectInteractor directInteractor = handController.gameObject.AddComponent<XRDirectInteractor>();
+
+        // Attach the grabbable object to the direct interactor
+        //directInteractor.interactionLayerMask = LayerMask.GetMask("Default"); // Set your interaction layer
+        //directInteractor.attachTransform = Newcube.transform;
+
+
         // Call the UpdateValue method to update the TextMeshPro text
         //valueToDisplay = Newcube.transform.localScale;
         //valueUpdater.UpdateValue(valueToDisplay.ToString());
@@ -78,6 +90,7 @@ public class CreatePrimitive : MonoBehaviour
         scaleall = new Vector3(0, 0, 0);
         //Newcube.AddComponent<UnityEngine.XR.Interaction.Toolkit.XRGrabInteractable>();
     }
+
 
     private void OnTriggerExit(Collider namedcol)
     {
@@ -130,7 +143,7 @@ public class CreatePrimitive : MonoBehaviour
 
         // Call the UpdateValue method to update the TextMeshPro text
         valueToDisplay = scale + scalex + scaley + scalez + scaleall;
-        valueUpdater.UpdateValue("Dimension: "+(valueToDisplay*1000).ToString());
+        //valueUpdater.UpdateValue("Dimension: "+(valueToDisplay*1000).ToString());
     }
 
     public void SetDirection(float value)

@@ -17,6 +17,8 @@ public class Destruction : MonoBehaviour
     float cubeScale;
     public string tag = "Removable_voxels";
 
+    //private Vector3[] BasechildLocations;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -86,6 +88,27 @@ public class Destruction : MonoBehaviour
                 }
             }
         }
+
+        //// Get the number of children
+        //int childCount = voxelParent.transform.childCount;
+
+        //// Initialize the array to store child locations
+        //BasechildLocations = new Vector3[childCount];
+
+        //// Loop through each child and save its position
+        //for (int i = 0; i < childCount; i++)
+        //{
+        //    Transform child = voxelParent.transform.GetChild(i);
+        //    BasechildLocations[i] = child.localPosition;
+        //}
+
+        //// Print the first 10 values of childLocations
+        //int printCount = Mathf.Min(10, BasechildLocations.Length);
+
+        //for (int i = 0; i < printCount; i++)
+        //{
+        //    Debug.Log($"Base Child Location {i + 1}: {BasechildLocations[i]}");
+        //}
 
         // Set the voxels into the original rotation of the block
         voxelParent.GetComponent<Transform>().Rotate(rotation, Space.Self);
