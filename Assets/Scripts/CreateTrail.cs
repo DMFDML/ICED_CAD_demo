@@ -41,7 +41,6 @@ public class CreateTrail : MonoBehaviour
         Line.positionCount = 0;
 
         //Debug.Log("Start Line");
-        Line.positionCount = 0;
         Vector3 mousePos = transform.position;
 
         Line.positionCount = 2;

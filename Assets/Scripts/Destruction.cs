@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using System.IO;
 public class Destruction : MonoBehaviour
 {
 
@@ -17,7 +17,9 @@ public class Destruction : MonoBehaviour
     float cubeScale;
     public string tag = "Removable_voxels";
 
-    //private Vector3[] BasechildLocations;
+    private Vector3[] BasechildLocations;
+    // File path to save the CSV file
+    private string filePath;
 
     // Start is called before the first frame update
     void Start()
@@ -63,6 +65,7 @@ public class Destruction : MonoBehaviour
             voxelParent = new GameObject("Voxel Parent", typeof(BoxCollider));
             voxelParent.tag = tag;
             voxelParent.GetComponent<Transform>().position = transform.position;
+            voxelParent.GetComponent<Transform>().localScale= transform.localScale;
         }
 
         //turn the block off
@@ -82,6 +85,7 @@ public class Destruction : MonoBehaviour
                         vec = vec - new Vector3(cubeWidth/2 - cubeScale/2, cubeHeight/2  - cubeScale/2, cubeDepth/2  - cubeScale/2);
 
                         GameObject cubes = (GameObject)Instantiate(mesh, vec + new Vector3(x, y, z), voxelParent.GetComponent<Transform>().rotation);
+                        cubes.AddComponent<GrabVoxelParent>();
                         cubes.transform.SetParent(voxelParent.GetComponent<Transform>());
                         cubes.gameObject.GetComponent<MeshRenderer>().material = gameObject.GetComponent<MeshRenderer>().material;
                     }
@@ -89,29 +93,45 @@ public class Destruction : MonoBehaviour
             }
         }
 
-        //// Get the number of children
-        //int childCount = voxelParent.transform.childCount;
+        // Get the number of children
+        int childCount = voxelParent.transform.childCount;
 
-        //// Initialize the array to store child locations
-        //BasechildLocations = new Vector3[childCount];
+        // Initialize the array to store child locations
+        BasechildLocations = new Vector3[childCount];
 
-        //// Loop through each child and save its position
-        //for (int i = 0; i < childCount; i++)
-        //{
-        //    Transform child = voxelParent.transform.GetChild(i);
-        //    BasechildLocations[i] = child.localPosition;
-        //}
+        // loop through each child and save its position
+        for (int i = 0; i < childCount; i++)
+        {
+            Transform child = voxelParent.transform.GetChild(i);
+            BasechildLocations[i] = child.localPosition;
+        }
 
-        //// Print the first 10 values of childLocations
-        //int printCount = Mathf.Min(10, BasechildLocations.Length);
+        // print the first 10 values of childlocations
+        int printCount = Mathf.Min(10, BasechildLocations.Length);
 
-        //for (int i = 0; i < printCount; i++)
-        //{
-        //    Debug.Log($"Base Child Location {i + 1}: {BasechildLocations[i]}");
-        //}
+        for (int i = 0; i < printCount; i++)
+        {
+            Debug.Log($"Base child location {i + 1}: {BasechildLocations[i]}");
+        }
 
-        // Set the voxels into the original rotation of the block
+        // set the voxels into the original rotation of the block
         voxelParent.GetComponent<Transform>().Rotate(rotation, Space.Self);
 
+        // Save Raw Stock Voxel Model
+        filePath = Application.dataPath + $"/features/feature 0.csv";
+        // Create or overwrite the file
+        using (StreamWriter sw = new StreamWriter(filePath))
+        {
+            // Write header
+            //sw.WriteLine("Child Locations");
+
+            // Write data
+            for (int i = 0; i < BasechildLocations.Length; i++)
+            {
+                //Debug.Log($"{childLocations[i].x}, {childLocations[i].y}, {childLocations[i].z}");
+                sw.WriteLine($"{BasechildLocations[i].x}, {BasechildLocations[i].y}, {BasechildLocations[i].z}");
+            }
+            Debug.Log("Base Variables saved to CSV file");
+        }
     }
 }

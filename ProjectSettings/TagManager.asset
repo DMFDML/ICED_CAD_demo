@@ -12,6 +12,7 @@ TagManager:
   - Environment
   - Trail
   - Removable_voxels
+  - hand
   layers:
   - Default
   - TransparentFX
