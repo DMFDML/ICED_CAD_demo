@@ -74,7 +74,8 @@ public class GrabVoxelParent : MonoBehaviour
             {
                 Debug.Log("Trigger Entered Parent Name: " + voxelparent.name);
                 //handenteredinvoxel = 0;
-                //Set the "hand" GameObject as the parent of the "voxel" child
+                
+                //Set the "hand" GameObject as the parent of the "voxelparent"
                 voxelparent.gameObject.AddComponent<UnityEngine.XR.Interaction.Toolkit.XRGrabInteractable>();
 
                 // Set the Rigidbody properties if the Interactable component has a Rigidbody

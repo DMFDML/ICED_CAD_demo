@@ -1,3 +1,4 @@
+// Script to generate a 2D rectangle when the gameobject is moved
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;

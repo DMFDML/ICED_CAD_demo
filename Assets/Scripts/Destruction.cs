@@ -85,7 +85,7 @@ public class Destruction : MonoBehaviour
                         vec = vec - new Vector3(cubeWidth/2 - cubeScale/2, cubeHeight/2  - cubeScale/2, cubeDepth/2  - cubeScale/2);
 
                         GameObject cubes = (GameObject)Instantiate(mesh, vec + new Vector3(x, y, z), voxelParent.GetComponent<Transform>().rotation);
-                        cubes.AddComponent<GrabVoxelParent>();
+                        cubes.AddComponent<GrabVoxelParent>(); // Script added at the time of creation to enable addition of xrgrabinteractable to the voxel parent when a hand collides with it
                         cubes.transform.SetParent(voxelParent.GetComponent<Transform>());
                         cubes.gameObject.GetComponent<MeshRenderer>().material = gameObject.GetComponent<MeshRenderer>().material;
                     }

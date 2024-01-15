@@ -28,6 +28,7 @@ public class Carve : MonoBehaviour
         if (col.gameObject.tag == "voxel")
         {
             Destroy(col.gameObject);
+            //col.gameObject.SetActive(false);
         }
     }
 

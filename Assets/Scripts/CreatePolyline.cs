@@ -1,7 +1,7 @@
-using UnityEngine;
 /// <summary>
-/// This script creates a trail at the location of a gameobject with a particular width and color.
+/// This script creates a polyline at the location taken from trigger of right hand with a particular width and color.
 /// </summary>
+using UnityEngine;
 
 public class CreatePolyline : MonoBehaviour
 {
@@ -11,7 +11,6 @@ public class CreatePolyline : MonoBehaviour
     public float lineWidth = 0.04f;
     public float minimumVertexDistance = 0.1f;
     private GameObject Lineobject = null;
-    //public GameObject combined;
     private bool isLineStarted;
     private float newLineStarted = 1f;
 

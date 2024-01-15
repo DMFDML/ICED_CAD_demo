@@ -1,3 +1,4 @@
+// Script to add instantiation capability and enlarge it as per the distance from intial positon (when trigger is pressed) to final position
 using UnityEngine;
 
 public class EnlargeCube : MonoBehaviour
@@ -12,7 +13,7 @@ public class EnlargeCube : MonoBehaviour
     private float startcubeflag = 1f;
     void Start()
     {
-        // Save the initial position
+        // Save the base position where the grabbed shape will return after leaving it
         basePosition = transform.position;
         //initialScale = transform.localScale;
         //Debug.Log(initialScale);
@@ -28,7 +29,7 @@ public class EnlargeCube : MonoBehaviour
                 // Instantiate the cube if it hasn't been instantiated yet
                 if (cube == null)
                 {
-                    // Instantiate a cube at the initial position
+                    // Instantiate a prefab at the initial position
                     //cube = GameObject.CreatePrimitive(PrimitiveType.Cube);
                     cube = Instantiate(Prefab);// CreatePrimitive(PrimitiveType.Cube);
                     cube.transform.position = initialPosition;
