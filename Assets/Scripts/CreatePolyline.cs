@@ -18,6 +18,7 @@ public class CreatePolyline : MonoBehaviour
 
     public void StartTrail()
     {
+        Debug.Log(newLineStarted);
         if (newLineStarted == 1f)
         {
             Lineobject = Instantiate(LinePrefab);
@@ -68,7 +69,7 @@ public class CreatePolyline : MonoBehaviour
             float distance = Vector3.Distance(currentPos, Line.GetPosition(Line.positionCount - 2));
             if (distance > minimumVertexDistance)
             {
-                Debug.Log(Line.positionCount);
+                //Debug.Log(Line.positionCount);
                 UpdateLine();
             }
         }
@@ -83,6 +84,7 @@ public class CreatePolyline : MonoBehaviour
             //Lineobject.GetComponent<BoxCollider>().size = transform.position;
 
             isLineStarted = false;
+            newLineStarted = 1f;
         }
     }
 

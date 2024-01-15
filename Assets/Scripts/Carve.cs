@@ -92,4 +92,20 @@ public class Carve : MonoBehaviour
             Debug.Log("Variables saved to CSV file");
         }
     }
+
+    public void RemoveGrabbable()
+    {
+        GameObject voxelParentObject = GameObject.FindGameObjectWithTag("Removable_voxels");
+        if (voxelParentObject != null)
+        {
+            Destroy(voxelParentObject.gameObject.GetComponent<UnityEngine.XR.Interaction.Toolkit.XRGrabInteractable>());
+            Destroy(voxelParentObject.gameObject.GetComponent<UnityEngine.XR.Interaction.Toolkit.Transformers.XRGeneralGrabTransformer>());
+            Destroy(voxelParentObject.gameObject.GetComponent<Rigidbody>());
+        }
+        else
+        {
+            Debug.Log("No parent found on exit.");
+        }
+    }
+
 }

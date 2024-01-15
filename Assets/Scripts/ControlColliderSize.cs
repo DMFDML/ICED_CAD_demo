@@ -73,9 +73,9 @@ public class ControlColliderSize : MonoBehaviour
         //Debug.Log("Button Pressed! Value: " + value.y);
 
 
-        if (value.y == 1)
+        if (value.y > 0)
         {
-            Debug.Log("Size increasing");
+            //Debug.Log("Size increasing");
             // Calculate the new size based on joystick input
             float newSize = sphereCollider.radius + sizeChangeSpeed;
 
@@ -93,7 +93,7 @@ public class ControlColliderSize : MonoBehaviour
         }
         else 
         {
-            Debug.Log("Size decreasing");
+            //Debug.Log("Size decreasing");
 
             // Calculate the new size based on joystick input
             float newSize = sphereCollider.radius - sizeChangeSpeed;
@@ -136,7 +136,6 @@ public class ControlColliderSize : MonoBehaviour
     }
     public void changecolorwhite()
     {
-
         // Get the first (and only) child
         Transform child = transform.GetChild(0);
 
