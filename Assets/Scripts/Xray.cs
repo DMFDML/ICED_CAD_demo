@@ -15,7 +15,7 @@ public class Xray : MonoBehaviour
 
     // Added for saving voxels: Array to store child locations
     private Vector3[] childLocations;
-    private int k = 1;
+
     // File path to save the CSV file
     private string filePath;
 

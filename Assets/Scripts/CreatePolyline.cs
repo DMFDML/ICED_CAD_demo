@@ -14,7 +14,7 @@ public class CreatePolyline : MonoBehaviour
     private bool isLineStarted;
     private float newLineStarted = 1f;
 
-    public string tag = "PolyLine"; // The desired tag for the instantiated GameObject
+    //public string tag = "PolyLine"; // The desired tag for the instantiated GameObject
 
     public void StartTrail()
     {

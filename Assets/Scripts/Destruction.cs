@@ -4,7 +4,6 @@ using UnityEngine;
 using System.IO;
 public class Destruction : MonoBehaviour
 {
-
     public GameObject mesh;
     GameObject voxelParent;
     Vector3 rotation;
@@ -47,6 +46,65 @@ public class Destruction : MonoBehaviour
         }
     }
 
+    //Newly added code for checking type of collider and remove all voxel outside it at start
+    bool IsPositionInsideMeshCollider(Vector3 position)
+    {
+        // Get the collider attached to the current object
+        Collider collider = voxelParent.GetComponent<Collider>();
+        Debug.Log(collider);
+
+        if (collider != null)
+        {
+            // Convert the world position to local position
+            Vector3 localPosition = collider.transform.InverseTransformPoint(position);
+
+            // Check based on collider type
+            if (collider is SphereCollider)
+            {
+                // SphereCollider specific logic
+                SphereCollider sphereCollider = (SphereCollider)collider;
+                float distance = Vector3.Distance(localPosition, sphereCollider.center);
+                return distance <= sphereCollider.radius;
+            }
+            else if (collider is CapsuleCollider)
+            {
+                // CapsuleCollider specific logic
+                CapsuleCollider capsuleCollider = (CapsuleCollider)collider;
+                return IsPositionInsideCapsule(localPosition, capsuleCollider);
+            }
+            else if (collider is BoxCollider)
+            {
+                // Use the bounds of the collider to check if the point is inside
+                if (collider.bounds.Contains(localPosition))
+                {
+                    return true; // Position is inside at least one collider
+                }
+            }
+            else
+            {
+                Debug.LogWarning("Collider type not supported for checking inside.");
+            }
+        }
+
+        // Position is outside all colliders
+        return false;
+    }
+
+    bool IsPositionInsideCapsule(Vector3 localPosition, CapsuleCollider capsuleCollider)
+    {
+        // CapsuleCollider specific logic
+        // Implementation to check if the localPosition is inside the capsule
+        // You need to customize this logic based on the shape of the capsule
+
+        // Example: Check if the localPosition is within the capsule's height
+        float halfHeight = capsuleCollider.height * 0.5f;
+        float distanceToCenterY = Mathf.Abs(localPosition.y - capsuleCollider.center.y);
+
+        return distanceToCenterY <= halfHeight;
+    }
+    ///////////////////////////// End of new code //////////////////////////////////////////////
+    
+
     void CreateCube()
     {
 
@@ -62,7 +120,41 @@ public class Destruction : MonoBehaviour
         }
         else
         {
-            voxelParent = new GameObject("Voxel Parent", typeof(BoxCollider));
+            //// New Code ////
+            // Get the collider attached to the current object
+            Collider collider = GetComponent<Collider>();
+
+            if (collider != null)
+            {
+                // Get the type of the collider
+                System.Type colliderType = collider.GetType();
+
+                // Create a new GameObject
+                voxelParent = new GameObject("Voxel Parent");
+
+                // Add the same type of collider to the new GameObject
+                Collider newCollider = voxelParent.AddComponent(colliderType) as Collider;
+
+                if (newCollider != null)
+                {
+                    // Position the new GameObject at the same position as the current object
+                    voxelParent.transform.position = transform.position;
+
+                    Debug.Log("Added collider of type " + colliderType.Name + " to the new GameObject.");
+                }
+                else
+                {
+                    Debug.LogError("Failed to add collider to the new GameObject.");
+                }
+            }
+            else
+            {
+                Debug.LogError("No Collider attached to the GameObject!");
+            }
+            //////////  New code end /////////////////////////////////////////////
+
+            // Get the collider attached to the current object
+            //voxelParent = new GameObject("Voxel Parent", typeof(BoxCollider));
             voxelParent.tag = tag;
             voxelParent.GetComponent<Transform>().position = transform.position;
             voxelParent.GetComponent<Transform>().localScale= transform.localScale;
@@ -82,12 +174,24 @@ public class Destruction : MonoBehaviour
                     for (float z = 0; z < cubeDepth; z += cubeScale)
                     {
                         Vector3 vec = transform.position;
-                        vec = vec - new Vector3(cubeWidth/2 - cubeScale/2, cubeHeight/2  - cubeScale/2, cubeDepth/2  - cubeScale/2);
+                        vec = vec - new Vector3(cubeWidth / 2 - cubeScale / 2, cubeHeight / 2 - cubeScale / 2, cubeDepth / 2 - cubeScale / 2);
+                        //Debug.Log(vec + new Vector3(x, y, z));
+                        // Check if the position is inside the mesh collider
+                        if (IsPositionInsideMeshCollider(vec + new Vector3(x, y, z))) // added to check the extents of collider and remove outside voxels,
+                                                                                      // currently checks for box, sphere and capsule colliders. uses above functions
+                        {
+                            //Debug.Log("Yes, the position is inside the mesh collider!");
+                            GameObject cubes = (GameObject)Instantiate(mesh, vec + new Vector3(x, y, z), voxelParent.GetComponent<Transform>().rotation);
+                            cubes.AddComponent<GrabVoxelParent>(); // Script added at the time of creation to enable addition of xrgrabinteractable to the voxel parent when a hand collides with it
+                            cubes.transform.SetParent(voxelParent.GetComponent<Transform>());
+                            cubes.gameObject.GetComponent<MeshRenderer>().material = gameObject.GetComponent<MeshRenderer>().material;
+                        }
+                        else
+                        {
+                            Debug.Log("No, the position is outside the mesh collider.");
+                        }
 
-                        GameObject cubes = (GameObject)Instantiate(mesh, vec + new Vector3(x, y, z), voxelParent.GetComponent<Transform>().rotation);
-                        cubes.AddComponent<GrabVoxelParent>(); // Script added at the time of creation to enable addition of xrgrabinteractable to the voxel parent when a hand collides with it
-                        cubes.transform.SetParent(voxelParent.GetComponent<Transform>());
-                        cubes.gameObject.GetComponent<MeshRenderer>().material = gameObject.GetComponent<MeshRenderer>().material;
+                        
                     }
                 }
             }
