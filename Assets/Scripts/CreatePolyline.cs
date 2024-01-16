@@ -55,6 +55,7 @@ public class CreatePolyline : MonoBehaviour
         else if (newLineStarted == 2f)
         {
             Line.positionCount++;
+            Line.SetPosition(Line.positionCount - 1, transform.position);
         }
     }
 
