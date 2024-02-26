@@ -29,6 +29,11 @@ public class Carve : MonoBehaviour
         {
             Destroy(col.gameObject);
             //col.gameObject.SetActive(false);
+            //Transform child = col.gameObject.transform;
+            //Debug.Log(child);
+            //// Initialize the array to store child locations
+            //childLocations[k] = new Vector3(child.localPosition.x, child.localPosition.y, child.localPosition.z);
+            //k=k+1;
         }
     }
 

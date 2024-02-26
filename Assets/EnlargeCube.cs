@@ -29,6 +29,7 @@ public class EnlargeCube : MonoBehaviour
                 // Instantiate the cube if it hasn't been instantiated yet
                 if (cube == null)
                 {
+                    Debug.Log(cube);
                     // Instantiate a prefab at the initial position
                     //cube = GameObject.CreatePrimitive(PrimitiveType.Cube);
                     cube = Instantiate(Prefab);// CreatePrimitive(PrimitiveType.Cube);
@@ -63,6 +64,9 @@ public class EnlargeCube : MonoBehaviour
         // Save the initial position
         initialPosition = transform.position;
         initialScale = new Vector3(0.2f,0.2f,0.2f);
+        cube = Instantiate(Prefab);// CreatePrimitive(PrimitiveType.Cube);
+        cube.transform.position = initialPosition;
+        cube.transform.localScale = initialScale;
         startcubeflag = 0f;
     }
 
