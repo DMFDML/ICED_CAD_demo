@@ -20,6 +20,7 @@ public class MeshModify : MonoBehaviour
         // Get the Mesh component of the meshObject
         mesh = meshObject.GetComponent<MeshFilter>().mesh;
 
+        
         // Make a copy of the original vertices
         //originalVertices = mesh.vertices;
         verticesCollided = new int[50];
@@ -34,19 +35,51 @@ public class MeshModify : MonoBehaviour
                 for (int i = 0; i < verticesCollided.Length; i++)
                 {
                 //Debug.Log(verticesCollided[i]);
-                    Debug.Log(originalVertices[verticesCollided[1]].x);
+                    //Debug.Log(originalVertices[verticesCollided[1]].x);
                     //Debug.Log(sphereCenter);
                     Vector3 sphereCenterNew = transform.position;
                     //Debug.Log(sphereCenterNew);
-                    float distance = Vector3.Distance(sphereCenterNew, sphereCenter);
-                    Debug.Log(distance);
+                    //float distance = Vector3.Distance(sphereCenterNew, sphereCenter);
+                Vector3 distance = sphereCenterNew - sphereCenter;
+                Debug.Log(distance);
+
+                // Convert vertices from local space to world space
+                Vector3 distanceInLocalSpace = meshObject.transform.InverseTransformDirection(distance);
+
+
+                Debug.Log(distanceInLocalSpace);
+
+                if (Mathf.Abs(distanceInLocalSpace.x) > Mathf.Abs(distanceInLocalSpace.y))
+                {
+                    if (Mathf.Abs(distanceInLocalSpace.x) > Mathf.Abs(distanceInLocalSpace.z))
+                    {
+                        if (verticesCollided[i] > 0)
+                        {
+                            modifiedVertices[verticesCollided[i]].x = originalVertices[verticesCollided[i]].x + distanceInLocalSpace.x;
+                            modifiedVertices[verticesCollided[i]].y = originalVertices[verticesCollided[i]].y;
+                            modifiedVertices[verticesCollided[i]].z = originalVertices[verticesCollided[i]].z;
+                        }
+                    }
+                    else
+                    {
+                        if (verticesCollided[i] > 0)
+                        {
+                            modifiedVertices[verticesCollided[i]].z = originalVertices[verticesCollided[i]].z + distanceInLocalSpace.z;
+                            modifiedVertices[verticesCollided[i]].x = originalVertices[verticesCollided[i]].x;
+                            modifiedVertices[verticesCollided[i]].y = originalVertices[verticesCollided[i]].y;
+                        }
+                    }
+                }
+                else if (Mathf.Abs(distanceInLocalSpace.y) > Mathf.Abs(distanceInLocalSpace.z))
+                {
                     if (verticesCollided[i] > 0)
                     {
-                        modifiedVertices[verticesCollided[i]].x = originalVertices[verticesCollided[i]].x - distance;
+                        modifiedVertices[verticesCollided[i]].y = originalVertices[verticesCollided[i]].y + distanceInLocalSpace.y;
+                        modifiedVertices[verticesCollided[i]].x = originalVertices[verticesCollided[i]].x;
+                        modifiedVertices[verticesCollided[i]].z = originalVertices[verticesCollided[i]].z;
                     }
-                    Debug.Log(modifiedVertices[verticesCollided[1]].x);
-
                 }
+            }
                 // Apply the modified vertices to the mesh
                 //Debug.Log("still updating");
                 mesh.vertices = modifiedVertices;
@@ -92,7 +125,7 @@ public class MeshModify : MonoBehaviour
         // Check for collision with the sphere collider
         originalVertices = mesh.vertices;
         sphereCenter = transform.position;
-        Debug.Log(sphereCenter);
+        //Debug.Log(sphereCenter);
         float sphereRadius = GetComponent<SphereCollider>().radius;
         //Debug.Log(sphereRadius);
         for (int i = 0; i < originalVertices.Length; i++)
