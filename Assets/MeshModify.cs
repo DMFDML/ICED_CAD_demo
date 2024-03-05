@@ -5,7 +5,7 @@ using UnityEngine;
 public class MeshModify : MonoBehaviour
 {
     public GameObject meshObject;
-    public float modificationAmount;
+    //public float modificationAmount;
 
     private Mesh mesh;
     private Vector3[] originalVertices;
@@ -23,9 +23,9 @@ public class MeshModify : MonoBehaviour
         
         // Make a copy of the original vertices
         //originalVertices = mesh.vertices;
-        verticesCollided = new int[50];
+        verticesCollided = new int[100];
         //modifiedVertices = originalVertices;
-        modificationAmount = 0.01f;
+        //modificationAmount = 0.01f;
     }
 
     void Update()
@@ -41,13 +41,13 @@ public class MeshModify : MonoBehaviour
                     //Debug.Log(sphereCenterNew);
                     //float distance = Vector3.Distance(sphereCenterNew, sphereCenter);
                 Vector3 distance = sphereCenterNew - sphereCenter;
-                Debug.Log(distance);
+                //Debug.Log(distance);
 
                 // Convert vertices from local space to world space
                 Vector3 distanceInLocalSpace = meshObject.transform.InverseTransformDirection(distance);
 
 
-                Debug.Log(distanceInLocalSpace);
+                //Debug.Log(distanceInLocalSpace);
 
                 if (Mathf.Abs(distanceInLocalSpace.x) > Mathf.Abs(distanceInLocalSpace.y))
                 {
@@ -79,71 +79,42 @@ public class MeshModify : MonoBehaviour
                         modifiedVertices[verticesCollided[i]].z = originalVertices[verticesCollided[i]].z;
                     }
                 }
-            }
+                }
                 // Apply the modified vertices to the mesh
                 //Debug.Log("still updating");
                 mesh.vertices = modifiedVertices;
                 mesh.RecalculateNormals();
             }
-
-        
-        //    // Check for collision with the sphere collider
-        //    Vector3 sphereCenter = transform.position;
-        //    float sphereRadius = GetComponent<SphereCollider>().radius;
-        //    Debug.Log(sphereRadius);
-        //    for (int i = 0; i < originalVertices.Length; i++)
-        //    {
-        //        // Transform the vertex position to world space
-        //        Vector3 vertexWorldPos = meshObject.transform.TransformPoint(originalVertices[i]);
-        //        float distance = Vector3.Distance(vertexWorldPos, sphereCenter);
-
-        //        // Check if the vertex collides with the sphere
-        //        if (distance < sphereRadius)
-        //        {
-        //            verticesCollided[k] = i;
-        //            k++;
-        //            //Debug.Log(verticesCollided[k]);
-        //        }
-        //    }
-
-        //    //// Modify the vertices that collided with the sphere
-        //    //Vector3[] modifiedVertices = new Vector3[originalVertices.Length];
-        //    //for (int i = 0; i < originalVertices.Length; i++)
-        //    //{
-        //    //    modifiedVertices[i] = originalVertices[i];
-        //    //    if (verticesCollided[i])
-        //    //    {
-        //    //        Debug.Log(originalVertices[i]);
-        //    //        modifiedVertices[i] = transform.position;
-        //    //        Debug.Log(transform.position);//Vector3.one * modificationAmount;
-        //    //    }
-        //    //}
     }
 
     public void changeshape()
     {
         // Check for collision with the sphere collider
+        //Debug.Log(k);
         originalVertices = mesh.vertices;
         sphereCenter = transform.position;
         //Debug.Log(sphereCenter);
+        
         float sphereRadius = GetComponent<SphereCollider>().radius;
-        //Debug.Log(sphereRadius);
+        Color[] colors = new Color[originalVertices.Length];
         for (int i = 0; i < originalVertices.Length; i++)
         {
             // Transform the vertex position to world space
             Vector3 vertexWorldPos = meshObject.transform.TransformPoint(originalVertices[i]);
             float distance = Vector3.Distance(vertexWorldPos, sphereCenter);
-
             // Check if the vertex collides with the sphere
-            if (distance < sphereRadius)
+            if ((distance < sphereRadius)&&(k<100))
             {
                 verticesCollided[k] = i;
                 k++;
-                //Debug.Log(verticesCollided[k]);
+                Debug.Log(originalVertices[verticesCollided[i]]);
+                // Color the collided vertices (you can modify this part according to your visualization needs)
+                colors[i] = Color.red; // Set the color of collided vertices to red
             }
         }
 
-        modifiedVertices = (Vector3[])originalVertices.Clone(); ;
+        modifiedVertices = (Vector3[])originalVertices.Clone();
+        mesh.colors = colors; // Apply colors to the mesh
         updateshapeflag =true;
 
         //for (int i = 0; i < verticesCollided.Length; i++)
@@ -161,5 +132,10 @@ public class MeshModify : MonoBehaviour
     {
         updateshapeflag=false;
         Debug.Log("Changed Flag");
+        k=0;
+        for (int i = 0; i < verticesCollided.Length; i++)
+        {
+            verticesCollided[i]=0;
+        }
     }
 }
