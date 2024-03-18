@@ -22,7 +22,7 @@ public class Destruction : MonoBehaviour
     // File path to save the CSV file
     private string filePath;
     private string scriptPath = "C:\\Users\\ne23946\\IntelligentCAD\\basicScript.py";
-    private string freecadCmdPath = @"C:\\Program Files\\FreeCAD 0.20\\bin\\FreeCADCmd.exe";
+    private string freecadCmdPath = @"C:\\Program Files\\FreeCAD 0.21\\bin\\FreeCADCmd.exe";
 
     // Start is called before the first frame update
     void Start()
